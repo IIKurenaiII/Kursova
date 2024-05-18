@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kursova.Controller_add">
+    <AnchorPane prefHeight="400.0" prefWidth="635.0" style="-fx-background-color: white;">
+        <children>
+            <Text layoutX="14.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Предмет">
+                <font>
+                    <Font size="18.0" />
+                </font>
+            </Text>
+            <Text layoutX="14.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Тип">
+                <font>
+                    <Font size="18.0" />
+                </font>
+            </Text>
+            <Text layoutX="14.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Кількість">
+                <font>
+                    <Font size="18.0" />
+                </font>
+            </Text>
+            <Button fx:id="addButton" layoutX="483.0" layoutY="302.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Додати" />
+            <Text layoutX="336.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ціна">
+                <font>
+                    <Font size="18.0" />
+                </font>
+            </Text>
+            <DatePicker fx:id="datePicker" layoutX="336.0" layoutY="93.0" prefHeight="25.0" prefWidth="287.0" />
+            <Text layoutX="336.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дата">
+                <font>
+                    <Font size="18.0" />
+                </font>
+            </Text>
+            <TextField fx:id="quantityField" layoutX="14.0" layoutY="223.0" prefHeight="25.0" prefWidth="287.0" />
+            <TextField fx:id="productNameField" layoutX="14.0" layoutY="93.0" prefHeight="25.0" prefWidth="287.0" />
+            <TextField fx:id="priceField" layoutX="336.0" layoutY="158.0" prefHeight="25.0" prefWidth="287.0" />
+            <TextField fx:id="typeField" layoutX="14.0" layoutY="158.0" prefHeight="25.0" prefWidth="287.0" />
+            <RadioButton fx:id="absentRadioButton" layoutX="339.0" layoutY="227.0" mnemonicParsing="false" text="Відсутній" />
+            <RadioButton fx:id="availableRadioButton" layoutX="445.0" layoutY="227.0" mnemonicParsing="false" text="Наявний" />
+         <AnchorPane prefHeight="43.0" prefWidth="635.0" style="-fx-background-color: #00A550;">
+            <children>
+               <Text fill="WHITE" layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Додати предмет" wrappingWidth="185.13671875">
+                  <font>
+                     <Font size="22.0" />
+                  </font>
+               </Text>
+            </children>
+         </AnchorPane>
+         <Button fx:id="exitButton" layoutX="336.0" layoutY="302.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Відмінити" />
+         <TextField fx:id="authorField" layoutX="14.0" layoutY="302.0" prefHeight="25.0" prefWidth="287.0" />
+         <Text layoutX="337.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Статус">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Text>
+         <Text layoutX="14.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Хто додав" wrappingWidth="113.40625">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Text>
+         <CheckBox fx:id="checkAuthorBtn" layoutX="121.0" layoutY="272.0" mnemonicParsing="false" text="Вказати себе" />
+        </children>
+    </AnchorPane>
+</AnchorPane>

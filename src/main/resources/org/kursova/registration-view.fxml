@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="367.0" prefWidth="628.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kursova.Controller_registration">
+    <AnchorPane prefHeight="96.0" prefWidth="628.0" style="-fx-background-color: #00A550;">
+        <children>
+            <Text fill="WHITE" layoutX="248.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Реєстрація">
+                <font>
+                    <Font name="Georgia Italic" size="24.0" />
+                </font></Text>
+        </children></AnchorPane>
+    <AnchorPane prefHeight="300.0" prefWidth="628.0" AnchorPane.topAnchor="0.0">
+        <children>
+            <ButtonBar layoutX="334.0" layoutY="201.0" prefHeight="43.0" prefWidth="280.0">
+                <buttons>
+                    <Button fx:id="CancelButton" style="-fx-background-color: #FF5733; -fx-text-fill: white;" text="Відмінити">
+                  <font>
+                     <Font name="Georgia Italic" size="12.0" />
+                  </font></Button>
+                    <Button fx:id="RegistrationButton" prefHeight="25.0" prefWidth="127.0" style="-fx-background-color: #00A550; -fx-text-fill: white;" text="Зареєструватися">
+                  <font>
+                     <Font name="Georgia" size="12.0" />
+                  </font></Button>
+                </buttons>
+            </ButtonBar>
+            <TextField fx:id="EmailField" layoutX="14.0" layoutY="35.0" prefHeight="25.0" prefWidth="280.0" promptText="Введіть електронну пошту" />
+            <PasswordField fx:id="PasswordField" layoutX="334.0" layoutY="35.0" prefHeight="25.0" prefWidth="280.0" promptText="Введіть пароль" />
+            <TextField fx:id="PhoneNumberField" layoutX="14.0" layoutY="132.0" prefHeight="25.0" prefWidth="280.0" promptText="Введіть номер мобільного" />
+            <TextField fx:id="LastnameField" layoutX="334.0" layoutY="84.0" prefHeight="25.0" prefWidth="280.0" promptText="Введіть своє прізвище" />
+            <TextField fx:id="FirstnameField" layoutX="14.0" layoutY="84.0" prefHeight="25.0" prefWidth="280.0" promptText="Введіть своє ім`я " />
+            <TextField fx:id="UsernNamelField" layoutX="334.0" layoutY="132.0" prefHeight="25.0" prefWidth="280.0" promptText="Введіть ім`я користувача" />
+
+        </children></AnchorPane>
+</VBox>
