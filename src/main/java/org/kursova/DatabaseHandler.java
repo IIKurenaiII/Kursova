@@ -160,6 +160,196 @@ public class DatabaseHandler extends Configs {
 
         return productList;
     }
+
+    //-------------------------------------------------------------------------------------------//
+
+    public ObservableList<Item> searchProductByName(String productName) {
+        ObservableList<Item> productList = FXCollections.observableArrayList();
+
+        String select = "SELECT * FROM " + Const.PRODUCT_TABLE + " WHERE " + Const.PRODUCT_NAME + " LIKE ?";
+
+        try (Connection connection = getDbConnection();
+             PreparedStatement prSt = connection.prepareStatement(select)) {
+            prSt.setString(1, "%" + productName + "%");
+
+            try (ResultSet resultSet = prSt.executeQuery()) {
+                while (resultSet.next()) {
+                    String num = resultSet.getString(Const.PRODUCT_NUMBER);
+                    String name = resultSet.getString(Const.PRODUCT_NAME);
+                    String status = resultSet.getString(Const.PRODUCT_STATUS);
+                    String type = resultSet.getString(Const.PRODUCT_TYPE);
+                    String quantity = resultSet.getString(Const.PRODUCT_QUANTITY);
+                    String price = resultSet.getString(Const.PRODUCT_PRICE);
+                    String date = resultSet.getString(Const.PRODUCT_DATE);
+                    String author = resultSet.getString(Const.PRODUCT_AUTHOR);
+
+                    Item item = new Item(num, name, status, type, quantity, price, date, author);
+                    productList.add(item);
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return productList;
+    }
+
+    public ObservableList<Item> searchProductByType(String productType) {
+        ObservableList<Item> productList = FXCollections.observableArrayList();
+
+        String select = "SELECT * FROM " + Const.PRODUCT_TABLE + " WHERE " + Const.PRODUCT_TYPE + " LIKE ?";
+
+        try (Connection connection = getDbConnection();
+             PreparedStatement prSt = connection.prepareStatement(select)) {
+            prSt.setString(1, "%" + productType + "%");
+
+            try (ResultSet resultSet = prSt.executeQuery()) {
+                while (resultSet.next()) {
+                    String num = resultSet.getString(Const.PRODUCT_NUMBER);
+                    String name = resultSet.getString(Const.PRODUCT_NAME);
+                    String status = resultSet.getString(Const.PRODUCT_STATUS);
+                    String type = resultSet.getString(Const.PRODUCT_TYPE);
+                    String quantity = resultSet.getString(Const.PRODUCT_QUANTITY);
+                    String price = resultSet.getString(Const.PRODUCT_PRICE);
+                    String date = resultSet.getString(Const.PRODUCT_DATE);
+                    String author = resultSet.getString(Const.PRODUCT_AUTHOR);
+
+                    Item item = new Item(num, name, status, type, quantity, price, date, author);
+                    productList.add(item);
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return productList;
+    }
+
+    public ObservableList<Item> searchProductByQuantity(String productQuantity) {
+        ObservableList<Item> productList = FXCollections.observableArrayList();
+
+        String select = "SELECT * FROM " + Const.PRODUCT_TABLE + " WHERE " + Const.PRODUCT_QUANTITY + " LIKE ?";
+
+        try (Connection connection = getDbConnection();
+             PreparedStatement prSt = connection.prepareStatement(select)) {
+            prSt.setString(1, "%" + productQuantity + "%");
+
+            try (ResultSet resultSet = prSt.executeQuery()) {
+                while (resultSet.next()) {
+                    String num = resultSet.getString(Const.PRODUCT_NUMBER);
+                    String name = resultSet.getString(Const.PRODUCT_NAME);
+                    String status = resultSet.getString(Const.PRODUCT_STATUS);
+                    String type = resultSet.getString(Const.PRODUCT_TYPE);
+                    String quantity = resultSet.getString(Const.PRODUCT_QUANTITY);
+                    String price = resultSet.getString(Const.PRODUCT_PRICE);
+                    String date = resultSet.getString(Const.PRODUCT_DATE);
+                    String author = resultSet.getString(Const.PRODUCT_AUTHOR);
+
+                    Item item = new Item(num, name, status, type, quantity, price, date, author);
+                    productList.add(item);
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return productList;
+    }
+
+    public ObservableList<Item> searchProductByPrice(String productPrice) {
+        ObservableList<Item> productList = FXCollections.observableArrayList();
+
+        String select = "SELECT * FROM " + Const.PRODUCT_TABLE + " WHERE " + Const.PRODUCT_PRICE + " LIKE ?";
+
+        try (Connection connection = getDbConnection();
+             PreparedStatement prSt = connection.prepareStatement(select)) {
+            prSt.setString(1, "%" + productPrice + "%");
+
+            try (ResultSet resultSet = prSt.executeQuery()) {
+                while (resultSet.next()) {
+                    String num = resultSet.getString(Const.PRODUCT_NUMBER);
+                    String name = resultSet.getString(Const.PRODUCT_NAME);
+                    String status = resultSet.getString(Const.PRODUCT_STATUS);
+                    String type = resultSet.getString(Const.PRODUCT_TYPE);
+                    String quantity = resultSet.getString(Const.PRODUCT_QUANTITY);
+                    String price = resultSet.getString(Const.PRODUCT_PRICE);
+                    String date = resultSet.getString(Const.PRODUCT_DATE);
+                    String author = resultSet.getString(Const.PRODUCT_AUTHOR);
+
+                    Item item = new Item(num, name, status, type, quantity, price, date, author);
+                    productList.add(item);
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return productList;
+    }
+
+    public ObservableList<Item> searchProductByDate(String productDate) {
+        ObservableList<Item> productList = FXCollections.observableArrayList();
+
+        String select = "SELECT * FROM " + Const.PRODUCT_TABLE + " WHERE " + Const.PRODUCT_DATE + " LIKE ?";
+
+        try (Connection connection = getDbConnection();
+             PreparedStatement prSt = connection.prepareStatement(select)) {
+            prSt.setString(1, "%" + productDate + "%");
+
+            try (ResultSet resultSet = prSt.executeQuery()) {
+                while (resultSet.next()) {
+                    String num = resultSet.getString(Const.PRODUCT_NUMBER);
+                    String name = resultSet.getString(Const.PRODUCT_NAME);
+                    String status = resultSet.getString(Const.PRODUCT_STATUS);
+                    String type = resultSet.getString(Const.PRODUCT_TYPE);
+                    String quantity = resultSet.getString(Const.PRODUCT_QUANTITY);
+                    String price = resultSet.getString(Const.PRODUCT_PRICE);
+                    String date = resultSet.getString(Const.PRODUCT_DATE);
+                    String author = resultSet.getString(Const.PRODUCT_AUTHOR);
+
+                    Item item = new Item(num, name, status, type, quantity, price, date, author);
+                    productList.add(item);
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return productList;
+    }
+
+    public ObservableList<Item> searchProductByAuthor(String productAuthor) {
+        ObservableList<Item> productList = FXCollections.observableArrayList();
+
+        String select = "SELECT * FROM " + Const.PRODUCT_TABLE + " WHERE " + Const.PRODUCT_AUTHOR + " LIKE ?";
+
+        try (Connection connection = getDbConnection();
+             PreparedStatement prSt = connection.prepareStatement(select)) {
+            prSt.setString(1, "%" + productAuthor + "%");
+
+            try (ResultSet resultSet = prSt.executeQuery()) {
+                while (resultSet.next()) {
+                    String num = resultSet.getString(Const.PRODUCT_NUMBER);
+                    String name = resultSet.getString(Const.PRODUCT_NAME);
+                    String status = resultSet.getString(Const.PRODUCT_STATUS);
+                    String type = resultSet.getString(Const.PRODUCT_TYPE);
+                    String quantity = resultSet.getString(Const.PRODUCT_QUANTITY);
+                    String price = resultSet.getString(Const.PRODUCT_PRICE);
+                    String date = resultSet.getString(Const.PRODUCT_DATE);
+                    String author = resultSet.getString(Const.PRODUCT_AUTHOR);
+
+                    Item item = new Item(num, name, status, type, quantity, price, date, author);
+                    productList.add(item);
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return productList;
+    }
+
+
 }
 
 

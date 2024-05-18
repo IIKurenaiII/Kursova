@@ -2,6 +2,7 @@ package org.kursova;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,12 +12,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.application.Platform;
 import javafx.geometry.NodeOrientation;
+import org.kursova.DatabaseHandler;
+
 
 import java.io.IOException;
 
 public class Controller_home {
     @FXML
     private Button exitBtn;
+    @FXML
+    private Button searchBtn;
     @FXML
     private TableView<Item> itemTableView;
     @FXML
@@ -45,14 +50,21 @@ public class Controller_home {
     private RadioButton availableRadioBtn;
     @FXML
     private RadioButton showAllRadioBtn;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private ComboBox searchPropertiesComboBox;
 
     private final ToggleGroup radioGroup = new ToggleGroup();
 
     private ObservableList<Item> list = FXCollections.observableArrayList();
     private int lastProductNum = 0;
+    private DatabaseHandler dbHandler;
 
     @FXML
     private void initialize() {
+        dbHandler = new DatabaseHandler();
+
         productNum.setCellValueFactory(new PropertyValueFactory<>("productNum"));
         productNameColumn.setCellValueFactory(new PropertyValueFactory<>("productName"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
@@ -71,6 +83,8 @@ public class Controller_home {
         showAllRadioBtn.setOnAction(event -> updateTable());
 
         updateBtn.setOnAction(actionEvent -> updateTable());
+        searchBtn.setOnAction(this::handleSearchButtonAction);
+
 
         addButtonView.setOnAction(actionEvent -> loadScene("/org/kursova/add_window-view.fxml"));
 
@@ -81,6 +95,8 @@ public class Controller_home {
         showAllRadioBtn.setSelected(true);
         updateTable();
     }
+
+
 
     public void updateTable() {
         DatabaseHandler dbHandler = new DatabaseHandler();
@@ -131,4 +147,58 @@ public class Controller_home {
             }
         });
     }
+
+    @FXML
+    private void handleComboBoxAction(ActionEvent event) {
+        String selectedProperty = (String) searchPropertiesComboBox.getValue();
+        if (selectedProperty != null) {
+            searchField.clear();
+            searchField.setPromptText("Введіть значення для " + selectedProperty.toLowerCase());
+        }
+    }
+
+    @FXML
+    private void searchProduct() {
+        String selectedProperty = (String) searchPropertiesComboBox.getValue();
+        String searchValue = searchField.getText().trim();
+
+        if (selectedProperty != null && !searchValue.isEmpty()) {
+            ObservableList<Item> filteredList;
+            switch (selectedProperty) {
+                case "Назва продукту":
+                    filteredList = dbHandler.searchProductByName(searchValue);
+                    break;
+                case "Тип":
+                    filteredList = dbHandler.searchProductByType(searchValue);
+                    break;
+                case "Кількість":
+                    filteredList = dbHandler.searchProductByQuantity(searchValue);
+                    break;
+                case "Ціна":
+                    filteredList = dbHandler.searchProductByPrice(searchValue);
+                    break;
+                case "Дата":
+                    filteredList = dbHandler.searchProductByDate(searchValue);
+                    break;
+                case "Хто додав":
+                    filteredList = dbHandler.searchProductByAuthor(searchValue);
+                    break;
+                default:
+                    filteredList = FXCollections.emptyObservableList();
+            }
+            itemTableView.setItems(filteredList);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Помилка пошуку");
+            alert.setHeaderText(null);
+            alert.setContentText("Будь ласка, оберіть властивість та введіть значення для пошуку.");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void handleSearchButtonAction(ActionEvent event) {
+        searchProduct();
+    }
+
 }
