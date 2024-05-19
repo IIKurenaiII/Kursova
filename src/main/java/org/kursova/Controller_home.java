@@ -12,8 +12,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.application.Platform;
 import javafx.geometry.NodeOrientation;
-import org.kursova.DatabaseHandler;
-
 
 import java.io.IOException;
 
@@ -29,7 +27,7 @@ public class Controller_home {
     @FXML
     private Button addButtonView;
     @FXML
-    private TableColumn<Item, Integer> productNum;
+    private Button editButtonView;
     @FXML
     private TableColumn<Item, String> productNameColumn;
     @FXML
@@ -53,19 +51,17 @@ public class Controller_home {
     @FXML
     private TextField searchField;
     @FXML
-    private ComboBox searchPropertiesComboBox;
+    private ComboBox<String> searchPropertiesComboBox;
 
     private final ToggleGroup radioGroup = new ToggleGroup();
 
     private ObservableList<Item> list = FXCollections.observableArrayList();
-    private int lastProductNum = 0;
     private DatabaseHandler dbHandler;
 
     @FXML
     private void initialize() {
         dbHandler = new DatabaseHandler();
 
-        productNum.setCellValueFactory(new PropertyValueFactory<>("productNum"));
         productNameColumn.setCellValueFactory(new PropertyValueFactory<>("productName"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -84,19 +80,27 @@ public class Controller_home {
 
         updateBtn.setOnAction(actionEvent -> updateTable());
         searchBtn.setOnAction(this::handleSearchButtonAction);
-
+        editButtonView.setOnAction(actionEvent -> {
+            Item selectedItem = itemTableView.getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+                openEditWindow(selectedItem);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Попередження");
+                alert.setHeaderText(null);
+                alert.setContentText("Будь ласка, оберіть елемент для редагування.");
+                alert.showAndWait();
+            }
+        });
 
         addButtonView.setOnAction(actionEvent -> loadScene("/org/kursova/add_window-view.fxml"));
 
         exitBtn.setOnAction(actionEvent -> showExitConfirmation());
 
         itemTableView.setItems(list);
-        lastProductNum = list.size();
         showAllRadioBtn.setSelected(true);
         updateTable();
     }
-
-
 
     public void updateTable() {
         DatabaseHandler dbHandler = new DatabaseHandler();
@@ -149,17 +153,8 @@ public class Controller_home {
     }
 
     @FXML
-    private void handleComboBoxAction(ActionEvent event) {
-        String selectedProperty = (String) searchPropertiesComboBox.getValue();
-        if (selectedProperty != null) {
-            searchField.clear();
-            searchField.setPromptText("Введіть значення для " + selectedProperty.toLowerCase());
-        }
-    }
-
-    @FXML
     private void searchProduct() {
-        String selectedProperty = (String) searchPropertiesComboBox.getValue();
+        String selectedProperty = searchPropertiesComboBox.getValue();
         String searchValue = searchField.getText().trim();
 
         if (selectedProperty != null && !searchValue.isEmpty()) {
@@ -201,4 +196,22 @@ public class Controller_home {
         searchProduct();
     }
 
+    private void openEditWindow(Item selectedItem) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/kursova/edit_window-view.fxml"));
+            Parent root = loader.load();
+
+            Controller_edit editController = loader.getController();
+            editController.initData(selectedItem);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            editController.setStage(stage);
+
+            stage.showAndWait();
+            updateTable();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

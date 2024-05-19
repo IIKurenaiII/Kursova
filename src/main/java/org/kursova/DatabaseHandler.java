@@ -82,7 +82,6 @@ public class DatabaseHandler extends Configs {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
         return resSet;
     }
 
@@ -111,7 +110,6 @@ public class DatabaseHandler extends Configs {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
         return productList;
     }
 
@@ -127,7 +125,6 @@ public class DatabaseHandler extends Configs {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
         return count;
     }
 
@@ -157,7 +154,6 @@ public class DatabaseHandler extends Configs {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
         return productList;
     }
 
@@ -190,7 +186,6 @@ public class DatabaseHandler extends Configs {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
         return productList;
     }
 
@@ -221,7 +216,6 @@ public class DatabaseHandler extends Configs {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
         return productList;
     }
 
@@ -252,7 +246,6 @@ public class DatabaseHandler extends Configs {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
         return productList;
     }
 
@@ -283,7 +276,6 @@ public class DatabaseHandler extends Configs {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
         return productList;
     }
 
@@ -314,7 +306,6 @@ public class DatabaseHandler extends Configs {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
         return productList;
     }
 
@@ -345,11 +336,31 @@ public class DatabaseHandler extends Configs {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
         return productList;
     }
 
+    //---------------------------------------------------------------------------------------------//
 
+    public void updateProduct(Item item) {
+        String updateQuery = "UPDATE " + Const.PRODUCT_TABLE + " SET " + Const.PRODUCT_NAME + " = ?, " +
+                Const.PRODUCT_TYPE + " = ?, " + Const.PRODUCT_QUANTITY + " = ?, " + Const.PRODUCT_PRICE + " = ?, " +
+                Const.PRODUCT_AUTHOR + " = ?, " + Const.PRODUCT_STATUS + " = ? WHERE " + Const.PRODUCT_NUMBER + " = ?";
+
+        try (Connection connection = getDbConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+            preparedStatement.setString(1, item.getProductName());
+            preparedStatement.setString(2, item.getType());
+            preparedStatement.setString(3, item.getQuantity());
+            preparedStatement.setString(4, item.getPrice());
+            preparedStatement.setString(5, item.getAuthor());
+            preparedStatement.setString(6, item.getStatus());
+            preparedStatement.setString(7, item.getProductNum());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
 
