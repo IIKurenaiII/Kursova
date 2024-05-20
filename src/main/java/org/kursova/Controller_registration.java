@@ -75,7 +75,9 @@ public class Controller_registration {
         String phoneNumber = PhoneNumberField.getText();
         String email = EmailField.getText();
 
-        User user = new User(firstname, lastname, password, username, phoneNumber, email);
+        String role = "User";
+
+        User user = new User(firstname, lastname, password, username, phoneNumber, email,role);
 
         dbHandler.signUpUser(user);
 

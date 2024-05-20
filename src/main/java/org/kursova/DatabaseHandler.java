@@ -24,7 +24,7 @@ public class DatabaseHandler extends Configs {
 
     public void signUpUser(User user) {
         String insert = "INSERT INTO " + Const.USER_TABLE + "(" + Const.USER_FIRSTNAME + "," + Const.USER_LASTNAME + "," + Const.USER_PASSWORD + "," + Const.USER_USERNAME + "," +
-                Const.USER_PHONENUMBER + "," + Const.USER_EMAIL + ")" + "VALUES(?,?,?,?,?,?)";
+                Const.USER_PHONENUMBER + "," + Const.USER_EMAIL + "," + Const.USER_ROLE + ")" + "VALUES(?,?,?,?,?,?,?)";
 
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(insert);
@@ -34,6 +34,7 @@ public class DatabaseHandler extends Configs {
             prSt.setString(4 , user.getUsername());
             prSt.setString(5 , user.getPhonenumber());
             prSt.setString(6 , user.getEmail());
+            prSt.setString(7 , user.getRole());
 
             prSt.executeUpdate();
         } catch (SQLException e) {
@@ -42,6 +43,7 @@ public class DatabaseHandler extends Configs {
             e.printStackTrace();
         }
     }
+
 
     public void signUpProduct(Item item) {
         String insert = "INSERT INTO " + Const.PRODUCT_TABLE + "(" + Const.PRODUCT_NUMBER + "," + Const.PRODUCT_NAME + "," + Const.PRODUCT_STATUS + "," + Const.PRODUCT_TYPE + "," + Const.PRODUCT_QUANTITY + "," +
@@ -82,8 +84,6 @@ public class DatabaseHandler extends Configs {
         }
         return resultSet;
     }
-
-
 
     public ObservableList<Item> getAllProducts() {
         ObservableList<Item> productList = FXCollections.observableArrayList();
@@ -398,6 +398,30 @@ public class DatabaseHandler extends Configs {
             e.printStackTrace();
         }
     }
+    //---------------------------------------------------------------------------------------------//
+    public String getUserRole(String username) throws SQLException, ClassNotFoundException {
+        String role = null;
+        Connection connection = getDbConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT " + Const.USER_ROLE + " FROM " + Const.USER_TABLE + " WHERE " + Const.USER_USERNAME + " = ?"
+            );
+            preparedStatement.setString(1, username);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                role = resultSet.getString(Const.USER_ROLE);
+                System.out.println("Role from database: " + role);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return role;
+    }
+
+
 
 }
 

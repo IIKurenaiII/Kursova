@@ -9,18 +9,28 @@ public class User {
     private String username;
     private String phonenumber;
     private String email;
+    private String role;
 
-    public User(String firstname, String lastname, String password, String username, String phonenumber, String email) {
+    public User(String firstname, String lastname, String password, String username, String phonenumber, String email,String role) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.password = password;
         this.username = username;
         this.phonenumber = phonenumber;
         this.email = email;
+        this.role = role;
     }
 
     public User() {
 
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getFirstname() {

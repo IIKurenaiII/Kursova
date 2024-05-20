@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -34,7 +35,7 @@ public class Controller_authorization {
     @FXML
     public void initialize() {
 
-        ConfirmButton.setOnAction(event ->{
+        ConfirmButton.setOnAction(event -> {
             String loginUsername = userNameField.getText().trim();
             String loginPassword = passwordField.getText().trim();
 
@@ -48,7 +49,7 @@ public class Controller_authorization {
             }
         });
 
-        RegistrationButton.setOnAction(event ->{
+        RegistrationButton.setOnAction(event -> {
             loadScene("/org/kursova/registration-view.fxml", RegistrationButton);
         });
     }
@@ -58,22 +59,24 @@ public class Controller_authorization {
         User user = new User();
         user.setUsername(loginUsername);
         user.setPassword(loginPassword);
-        ResultSet res =  dbHandler.getUser(user);
+        ResultSet res = dbHandler.getUser(user);
 
         int count = 0;
+        String role = "";
 
         try {
-            while (res.next()){
+            while (res.next()) {
                 count++;
+                role = res.getString("role");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         if (count >= 1) {
+            loadHomeScene(role);
             currentUserLogin = loginUsername;
             currentUserPassword = loginPassword;
-            loadHomeScene();
             closeCurrentWindow(ConfirmButton);
         } else {
             Shake userAnim = new Shake(userNameField);
@@ -81,6 +84,8 @@ public class Controller_authorization {
             userAnim.playAnim();
             userPassword.playAnim();
         }
+
+        Controller_home.setLoggedInUser(user);
     }
 
     private FXMLLoader loader;
@@ -102,10 +107,23 @@ public class Controller_authorization {
         }
     }
 
-    private void loadHomeScene() {
+    private void loadHomeScene(String role) {
         loadScene("/org/kursova/home-view.fxml", ConfirmButton);
         Controller_home controllerHome = loader.getController();
+        controllerHome.setRole(role);
         controllerHome.updateTable();
+
+        controllerHome.setDeleteButtonVisibility(role);
+        controllerHome.setControlButtonVisibility(role);
+        showAlert(role);
+    }
+
+    private void showAlert(String role) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Роль користувача");
+        alert.setHeaderText(null);
+        alert.setContentText("Ваша роль: " + role);
+        alert.showAndWait();
     }
 
     private void closeCurrentWindow(Button button) {

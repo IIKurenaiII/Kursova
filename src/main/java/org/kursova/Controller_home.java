@@ -14,6 +14,7 @@ import javafx.application.Platform;
 import javafx.geometry.NodeOrientation;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class Controller_home {
     @FXML
@@ -32,6 +33,8 @@ public class Controller_home {
     private Button profileBtn;
     @FXML
     private Button deleteBtn;
+    @FXML
+    private Button controlBtn;
     @FXML
     private TableColumn<Item, String> productNameColumn;
     @FXML
@@ -61,6 +64,9 @@ public class Controller_home {
 
     private ObservableList<Item> list = FXCollections.observableArrayList();
     private DatabaseHandler dbHandler;
+    private static String currentUserRole;
+    private Controller_authorization authController;
+    private static User loggedInUser;
 
     @FXML
     private void initialize() {
@@ -77,14 +83,12 @@ public class Controller_home {
         missRadioBtn.setToggleGroup(radioGroup);
         availableRadioBtn.setToggleGroup(radioGroup);
         showAllRadioBtn.setToggleGroup(radioGroup);
-
         missRadioBtn.setOnAction(event -> updateTable());
         availableRadioBtn.setOnAction(event -> updateTable());
         showAllRadioBtn.setOnAction(event -> updateTable());
 
         updateBtn.setOnAction(actionEvent -> updateTable());
         searchBtn.setOnAction(this::handleSearchButtonAction);
-        deleteBtn.setOnAction(actionEvent -> handleDeleteButtonAction());
         editButtonView.setOnAction(actionEvent -> {
             Item selectedItem = itemTableView.getSelectionModel().getSelectedItem();
             if (selectedItem != null) {
@@ -100,13 +104,17 @@ public class Controller_home {
 
         addButtonView.setOnAction(actionEvent -> loadScene("/org/kursova/add_window-view.fxml"));
         profileBtn.setOnAction(actionEvent -> loadScene("/org/kursova/profile_window-view.fxml"));
-
+//        controlBtn.setOnAction(actionEvent -> loadScene("/org/kursova/control_window-view.fxml"));
         exitBtn.setOnAction(actionEvent -> showExitConfirmation());
+        deleteBtn.setOnAction(actionEvent -> handleDeleteButtonAction());
 
         itemTableView.setItems(list);
         showAllRadioBtn.setSelected(true);
         updateTable();
+
+        authController = new Controller_authorization();
     }
+
 
     public void updateTable() {
         DatabaseHandler dbHandler = new DatabaseHandler();
@@ -250,4 +258,30 @@ public class Controller_home {
         }
     }
 
+    public static void setLoggedInUser(User user) {
+        loggedInUser = user;
+    }
+
+    public void setRole(String role) {
+        currentUserRole = role;
+    }
+
+    public void setDeleteButtonVisibility(String role) {
+        if ("Admin".equals(role)) {
+            deleteBtn.setVisible(true);
+        } else {
+            deleteBtn.setVisible(false);
+        }
+    }
+
+    public void setControlButtonVisibility(String role) {
+        if ("Admin".equals(role)) {
+            controlBtn.setVisible(true);
+        } else {
+            controlBtn.setVisible(false);
+        }
+    }
+
+
 }
+

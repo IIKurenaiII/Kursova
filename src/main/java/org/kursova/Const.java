@@ -9,6 +9,7 @@ public class Const {
     public static final  String USER_USERNAME = "username";
     public static final  String USER_PHONENUMBER = "phonenumber";
     public static final  String USER_EMAIL = "email";
+    public static final  String USER_ROLE = "role";
 
     //констанити
     public static final String PRODUCT_TABLE = "products";
