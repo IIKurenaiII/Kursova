@@ -29,6 +29,10 @@ public class Controller_home {
     @FXML
     private Button editButtonView;
     @FXML
+    private Button profileBtn;
+    @FXML
+    private Button deleteBtn;
+    @FXML
     private TableColumn<Item, String> productNameColumn;
     @FXML
     private TableColumn<Item, String> statusColumn;
@@ -80,6 +84,7 @@ public class Controller_home {
 
         updateBtn.setOnAction(actionEvent -> updateTable());
         searchBtn.setOnAction(this::handleSearchButtonAction);
+        deleteBtn.setOnAction(actionEvent -> handleDeleteButtonAction());
         editButtonView.setOnAction(actionEvent -> {
             Item selectedItem = itemTableView.getSelectionModel().getSelectedItem();
             if (selectedItem != null) {
@@ -94,6 +99,7 @@ public class Controller_home {
         });
 
         addButtonView.setOnAction(actionEvent -> loadScene("/org/kursova/add_window-view.fxml"));
+        profileBtn.setOnAction(actionEvent -> loadScene("/org/kursova/profile_window-view.fxml"));
 
         exitBtn.setOnAction(actionEvent -> showExitConfirmation());
 
@@ -214,4 +220,34 @@ public class Controller_home {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void handleDeleteButtonAction() {
+        Item selectedItem = itemTableView.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Підтвердження видалення");
+            alert.setHeaderText(null);
+            alert.setContentText("Ви впевнені, що хочете видалити цей елемент?");
+
+            ButtonType okButton = new ButtonType("Так", ButtonBar.ButtonData.OK_DONE);
+            ButtonType cancelButton = new ButtonType("Ні", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            alert.getButtonTypes().setAll(okButton, cancelButton);
+
+            alert.showAndWait().ifPresent(buttonType -> {
+                if (buttonType == okButton) {
+                    dbHandler.deleteItem(selectedItem);
+                    updateTable();
+                }
+            });
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Попередження");
+            alert.setHeaderText(null);
+            alert.setContentText("Будь ласка, оберіть елемент для видалення.");
+            alert.showAndWait();
+        }
+    }
+
 }

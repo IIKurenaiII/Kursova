@@ -66,24 +66,23 @@ public class DatabaseHandler extends Configs {
         }
     }
 
-    public ResultSet getUser(User user){
-        ResultSet resSet = null;
-
-        String select = "SELECT * FROM " + Const.USER_TABLE + " WHERE " + Const.USER_USERNAME + "=? AND " + Const.USER_PASSWORD + "=?";
+    public ResultSet getUser(User user) {
+        ResultSet resultSet = null;
+        String query = "SELECT * FROM " + Const.USER_TABLE + " WHERE " +
+                Const.USER_USERNAME + "=? AND " + Const.USER_PASSWORD + "=?";
 
         try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select);
-            prSt.setString(1 , user.getUsername());
-            prSt.setString(2 , user.getPassword());
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(2, user.getPassword());
 
-            resSet = prSt.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return resSet;
+        return resultSet;
     }
+
 
 
     public ObservableList<Item> getAllProducts() {
@@ -361,6 +360,45 @@ public class DatabaseHandler extends Configs {
             e.printStackTrace();
         }
     }
+
+    //---------------------------------------------------------------------------------------------//
+    public void updateUser(User user) {
+        String query = "UPDATE " + Const.USER_TABLE + " SET " +
+                Const.USER_FIRSTNAME + "=?, " +
+                Const.USER_LASTNAME + "=?, " +
+                Const.USER_PASSWORD + "=?, " +
+                Const.USER_PHONENUMBER + "=?, " +
+                Const.USER_EMAIL + "=? WHERE " +
+                Const.USER_USERNAME + "=?";
+
+        try {
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+            preparedStatement.setString(1, user.getFirstname());
+            preparedStatement.setString(2, user.getLastname());
+            preparedStatement.setString(3, user.getPassword());
+            preparedStatement.setString(4, user.getPhonenumber());
+            preparedStatement.setString(5, user.getEmail());
+            preparedStatement.setString(6, user.getUsername());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    //---------------------------------------------------------------------------------------------//
+    public void deleteItem(Item item) {
+        String deleteQuery = "DELETE FROM " + Const.PRODUCT_TABLE + " WHERE " + Const.PRODUCT_NUMBER + " = ?";
+
+        try (Connection connection = getDbConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+            preparedStatement.setString(1, item.getProductNum());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
 

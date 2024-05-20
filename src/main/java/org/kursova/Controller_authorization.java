@@ -29,6 +29,7 @@ public class Controller_authorization {
     private Button ConfirmButton;
 
     private static String currentUserLogin;
+    private static String currentUserPassword;
 
     @FXML
     public void initialize() {
@@ -43,7 +44,7 @@ public class Controller_authorization {
                 userAnim.playAnim();
                 userPassword.playAnim();
             } else {
-                loginUser(loginUsername , loginPassword);
+                loginUser(loginUsername, loginPassword);
             }
         });
 
@@ -70,8 +71,9 @@ public class Controller_authorization {
         }
 
         if (count >= 1) {
-            loadHomeScene();
             currentUserLogin = loginUsername;
+            currentUserPassword = loginPassword;
+            loadHomeScene();
             closeCurrentWindow(ConfirmButton);
         } else {
             Shake userAnim = new Shake(userNameField);
@@ -114,6 +116,8 @@ public class Controller_authorization {
     public static String getCurrentUserLogin() {
         return currentUserLogin;
     }
-}
 
-//"/org/kursova/registration-view.fxml"
+    public static String getCurrentUserPassword() {
+        return currentUserPassword;
+    }
+}

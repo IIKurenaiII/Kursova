@@ -21,6 +21,7 @@
                   <Font name="Georgia Italic" size="34.0" />
                </font>
             </Text>
+            <Button fx:id="profileBtn" layoutX="1598.0" layoutY="25.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Профіль" />
          </children>
       </AnchorPane>
       <AnchorPane layoutY="114.0" prefHeight="786.0" prefWidth="1680.0" style="-fx-background-color: #00A550;">
@@ -74,6 +75,7 @@
             <Button fx:id="exitBtn" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Вихід" />
             <Button fx:id="addButtonView" layoutX="108.0" layoutY="7.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Додати" />
             <Button fx:id="editButtonView" layoutX="204.0" layoutY="7.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Редагувати" />
+            <Button fx:id="deleteBtn" layoutX="299.0" layoutY="5.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" text="Видалити" />
          </children>
       </AnchorPane>
    </children>
