@@ -12,9 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.application.Platform;
 import javafx.geometry.NodeOrientation;
-
 import java.io.IOException;
-import java.sql.SQLException;
 
 public class Controller_home {
     @FXML
@@ -104,7 +102,7 @@ public class Controller_home {
 
         addButtonView.setOnAction(actionEvent -> loadScene("/org/kursova/add_window-view.fxml"));
         profileBtn.setOnAction(actionEvent -> loadScene("/org/kursova/profile_window-view.fxml"));
-//        controlBtn.setOnAction(actionEvent -> loadScene("/org/kursova/control_window-view.fxml"));
+        controlBtn.setOnAction(actionEvent -> loadScene("/org/kursova/control-window_view.fxml"));
         exitBtn.setOnAction(actionEvent -> showExitConfirmation());
         deleteBtn.setOnAction(actionEvent -> handleDeleteButtonAction());
 
@@ -281,7 +279,5 @@ public class Controller_home {
             controlBtn.setVisible(false);
         }
     }
-
-
 }
 

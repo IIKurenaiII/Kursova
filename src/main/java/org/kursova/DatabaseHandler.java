@@ -3,11 +3,7 @@ package org.kursova;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class DatabaseHandler extends Configs {
     Connection dbConnection;
@@ -420,9 +416,115 @@ public class DatabaseHandler extends Configs {
 
         return role;
     }
+    //---------------------------------------------------------------------------------------------//
+    public ObservableList<User> getAllUsers() {
+        ObservableList<User> userList = FXCollections.observableArrayList();
+        String query = "SELECT * FROM " + Const.USER_TABLE;
 
+        try (Connection connection = getDbConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
 
+            while (resultSet.next()) {
+                User user = new User();
+                user.setFirstname(resultSet.getString(Const.USER_FIRSTNAME));
+                user.setLastname(resultSet.getString(Const.USER_LASTNAME));
+                user.setPassword(resultSet.getString(Const.USER_PASSWORD));
+                user.setUsername(resultSet.getString(Const.USER_USERNAME));
+                user.setPhonenumber(resultSet.getString(Const.USER_PHONENUMBER));
+                user.setEmail(resultSet.getString(Const.USER_EMAIL));
+                user.setRole(resultSet.getString(Const.USER_ROLE));
 
+                userList.add(user);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return userList;
+    }
+
+    public void deleteUser(String username) {
+        String query = "DELETE FROM " + Const.USER_TABLE + " WHERE " + Const.USER_USERNAME + " = ?";
+
+        try (Connection connection = getDbConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, username);
+            preparedStatement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateUserRole(String username, String newRole) {
+        String updateQuery = "UPDATE " + Const.USER_TABLE + " SET " +
+                Const.USER_ROLE + " = ? WHERE " +
+                Const.USER_USERNAME + " = ?";
+
+        try (Connection connection = getDbConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+            preparedStatement.setString(1, newRole);
+            preparedStatement.setString(2, username);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    public ObservableList<User> searchUserByFirstName(String firstName) {
+        ObservableList<User> userList = FXCollections.observableArrayList();
+        String select = "SELECT * FROM " + Const.USER_TABLE + " WHERE " + Const.USER_FIRSTNAME + " LIKE ?";
+
+        try (Connection connection = getDbConnection();
+             PreparedStatement prSt = connection.prepareStatement(select)) {
+            prSt.setString(1, "%" + firstName + "%");
+
+            try (ResultSet resultSet = prSt.executeQuery()) {
+                while (resultSet.next()) {
+                    User user = new User();
+                    user.setFirstname(resultSet.getString(Const.USER_FIRSTNAME));
+                    user.setLastname(resultSet.getString(Const.USER_LASTNAME));
+                    user.setPassword(resultSet.getString(Const.USER_PASSWORD));
+                    user.setUsername(resultSet.getString(Const.USER_USERNAME));
+                    user.setPhonenumber(resultSet.getString(Const.USER_PHONENUMBER));
+                    user.setEmail(resultSet.getString(Const.USER_EMAIL));
+                    user.setRole(resultSet.getString(Const.USER_ROLE));
+
+                    userList.add(user);
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return userList;
+    }
+
+    public ObservableList<User> searchUserByUsername(String username) {
+        ObservableList<User> userList = FXCollections.observableArrayList();
+        String select = "SELECT * FROM " + Const.USER_TABLE + " WHERE " + Const.USER_USERNAME + " LIKE ?";
+
+        try (Connection connection = getDbConnection();
+             PreparedStatement prSt = connection.prepareStatement(select)) {
+            prSt.setString(1, "%" + username + "%");
+
+            try (ResultSet resultSet = prSt.executeQuery()) {
+                while (resultSet.next()) {
+                    User user = new User();
+                    user.setFirstname(resultSet.getString(Const.USER_FIRSTNAME));
+                    user.setLastname(resultSet.getString(Const.USER_LASTNAME));
+                    user.setPassword(resultSet.getString(Const.USER_PASSWORD));
+                    user.setUsername(resultSet.getString(Const.USER_USERNAME));
+                    user.setPhonenumber(resultSet.getString(Const.USER_PHONENUMBER));
+                    user.setEmail(resultSet.getString(Const.USER_EMAIL));
+                    user.setRole(resultSet.getString(Const.USER_ROLE));
+
+                    userList.add(user);
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return userList;
+    }
 }
 
 
