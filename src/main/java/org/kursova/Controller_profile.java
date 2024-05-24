@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.sql.ResultSet;
@@ -30,6 +31,8 @@ public class Controller_profile {
     private Button saveBtn;
     @FXML
     private Button editBtnConfirm;
+    @FXML
+    private Text roleText;
 
     private boolean isEdited = false;
     private boolean isPasswordEntered = false;
@@ -43,6 +46,7 @@ public class Controller_profile {
         okayBtn.setOnAction(event -> handleOkayBtnAction());
 
         loginField.setText(Controller_authorization.getCurrentUserLogin());
+        loadUserRole();
 
         firstNameField.textProperty().addListener((observable, oldValue, newValue) -> {
             isEdited = true;
@@ -64,6 +68,26 @@ public class Controller_profile {
             isEdited = true;
             updateSaveBtnState();
         });
+    }
+
+    private void loadUserRole() {
+        DatabaseHandler dbHandler = new DatabaseHandler();
+        User user = new User();
+        user.setUsername(Controller_authorization.getCurrentUserLogin());
+        user.setPassword(Controller_authorization.getCurrentUserPassword());
+
+        ResultSet resultSet = dbHandler.getUser(user);
+        try {
+            if (resultSet.next()) {
+                String role = resultSet.getString("role");
+                roleText.setText(role);
+            } else {
+                showAlert("Помилка", "Користувача не знайдено.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Помилка", "Сталася помилка при завантаженні даних користувача.");
+        }
     }
 
     private void handleEditBtnAction() {

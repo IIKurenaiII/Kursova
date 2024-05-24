@@ -22,14 +22,14 @@
                </font>
             </Text>
             <Button fx:id="profileBtn" layoutX="1598.0" layoutY="25.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Профіль" />
-            <Button fx:id="controlBtn" layoutX="1502.0" layoutY="25.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Управляти" />
+            <Button fx:id="controlBtn" layoutX="1502.0" layoutY="25.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Панель" />
          </children>
       </AnchorPane>
       <AnchorPane layoutY="114.0" prefHeight="786.0" prefWidth="1680.0" style="-fx-background-color: #00A550;">
          <children>
             <TableView fx:id="itemTableView" layoutX="11.0" layoutY="50.0" prefHeight="728.0" prefWidth="1656.0">
               <columns>
-                  <TableColumn fx:id="productNum" minWidth="0.0" prefWidth="42.0" text="№" />
+                  <TableColumn fx:id="productNumColumn" minWidth="0.0" prefWidth="42.0" text="№" />
                   <TableColumn fx:id="productNameColumn" prefWidth="185.0" text="Назва продукту" />
                   <TableColumn fx:id="statusColumn" minWidth="0.0" prefWidth="152.0" text="Статус" />
                   <TableColumn fx:id="typeColumn" minWidth="0.0" prefWidth="143.0" text="Тип" />

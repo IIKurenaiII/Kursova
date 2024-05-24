@@ -18,6 +18,7 @@ public class DatabaseHandler extends Configs {
         return dbConnection;
     }
 
+    //VVVVVV------------Controller_control.java------------------Controller_registration.java------------------------------//
     public void signUpUser(User user) {
         String insert = "INSERT INTO " + Const.USER_TABLE + "(" + Const.USER_FIRSTNAME + "," + Const.USER_LASTNAME + "," + Const.USER_PASSWORD + "," + Const.USER_USERNAME + "," +
                 Const.USER_PHONENUMBER + "," + Const.USER_EMAIL + "," + Const.USER_ROLE + ")" + "VALUES(?,?,?,?,?,?,?)";
@@ -39,8 +40,7 @@ public class DatabaseHandler extends Configs {
             e.printStackTrace();
         }
     }
-
-
+    //VVVVVV----------------------------Controller_add.java-----------------------------------------------//
     public void signUpProduct(Item item) {
         String insert = "INSERT INTO " + Const.PRODUCT_TABLE + "(" + Const.PRODUCT_NUMBER + "," + Const.PRODUCT_NAME + "," + Const.PRODUCT_STATUS + "," + Const.PRODUCT_TYPE + "," + Const.PRODUCT_QUANTITY + "," +
                 Const.PRODUCT_PRICE + "," + Const.PRODUCT_DATE + "," + Const.PRODUCT_AUTHOR + ")" + "VALUES(?,?,?,?,?,?,?,?)";
@@ -63,7 +63,7 @@ public class DatabaseHandler extends Configs {
             e.printStackTrace();
         }
     }
-
+    //VVVVVV--------Controller_control.java--------------------------Controller_profile.java-------------------------------//
     public ResultSet getUser(User user) {
         ResultSet resultSet = null;
         String query = "SELECT * FROM " + Const.USER_TABLE + " WHERE " +
@@ -80,7 +80,7 @@ public class DatabaseHandler extends Configs {
         }
         return resultSet;
     }
-
+    //VVVVVV------------------------Controller_home.java-------------------------------------------------//
     public ObservableList<Item> getAllProducts() {
         ObservableList<Item> productList = FXCollections.observableArrayList();
 
@@ -107,7 +107,7 @@ public class DatabaseHandler extends Configs {
         }
         return productList;
     }
-
+    //VVVVVV-----------------------------Controller_add.java-------------------------------------------//
     public int getProductCount() {
         int count = 0;
         String selectCount = "SELECT COUNT(*) FROM " + Const.PRODUCT_TABLE;
@@ -122,7 +122,7 @@ public class DatabaseHandler extends Configs {
         }
         return count;
     }
-
+    //VVVVVV------------------------------Controller_home.java------------------------------------------//
     public ObservableList<Item> getProductsByStatus(String status) {
         ObservableList<Item> productList = FXCollections.observableArrayList();
 
@@ -151,9 +151,7 @@ public class DatabaseHandler extends Configs {
         }
         return productList;
     }
-
-    //-------------------------------------------------------------------------------------------//
-
+    //VVVVVV------------------------------Controller_home.java------------------------------------------//
     public ObservableList<Item> searchProductByName(String productName) {
         ObservableList<Item> productList = FXCollections.observableArrayList();
 
@@ -183,7 +181,7 @@ public class DatabaseHandler extends Configs {
         }
         return productList;
     }
-
+    //VVVVVV------------------------------Controller_home.java------------------------------------------//
     public ObservableList<Item> searchProductByType(String productType) {
         ObservableList<Item> productList = FXCollections.observableArrayList();
 
@@ -213,7 +211,7 @@ public class DatabaseHandler extends Configs {
         }
         return productList;
     }
-
+    //VVVVVV------------------------------Controller_home.java------------------------------------------//
     public ObservableList<Item> searchProductByQuantity(String productQuantity) {
         ObservableList<Item> productList = FXCollections.observableArrayList();
 
@@ -243,7 +241,7 @@ public class DatabaseHandler extends Configs {
         }
         return productList;
     }
-
+    //VVVVVV------------------------------Controller_home.java------------------------------------------//
     public ObservableList<Item> searchProductByPrice(String productPrice) {
         ObservableList<Item> productList = FXCollections.observableArrayList();
 
@@ -273,7 +271,7 @@ public class DatabaseHandler extends Configs {
         }
         return productList;
     }
-
+    //VVVVVV------------------------------Controller_home.java------------------------------------------//
     public ObservableList<Item> searchProductByDate(String productDate) {
         ObservableList<Item> productList = FXCollections.observableArrayList();
 
@@ -303,7 +301,7 @@ public class DatabaseHandler extends Configs {
         }
         return productList;
     }
-
+    //VVVVVV------------------------------Controller_home.java------------------------------------------//
     public ObservableList<Item> searchProductByAuthor(String productAuthor) {
         ObservableList<Item> productList = FXCollections.observableArrayList();
 
@@ -333,9 +331,7 @@ public class DatabaseHandler extends Configs {
         }
         return productList;
     }
-
-    //---------------------------------------------------------------------------------------------//
-
+    //VVVVVV------------------------------Controller_edit.java----------------------------------------//
     public void updateProduct(Item item) {
         String updateQuery = "UPDATE " + Const.PRODUCT_TABLE + " SET " + Const.PRODUCT_NAME + " = ?, " +
                 Const.PRODUCT_TYPE + " = ?, " + Const.PRODUCT_QUANTITY + " = ?, " + Const.PRODUCT_PRICE + " = ?, " +
@@ -356,8 +352,7 @@ public class DatabaseHandler extends Configs {
             e.printStackTrace();
         }
     }
-
-    //---------------------------------------------------------------------------------------------//
+    //VVVVVV-------------------------------Controller_profile.java---------------------------------------------//
     public void updateUser(User user) {
         String query = "UPDATE " + Const.USER_TABLE + " SET " +
                 Const.USER_FIRSTNAME + "=?, " +
@@ -381,7 +376,7 @@ public class DatabaseHandler extends Configs {
             e.printStackTrace();
         }
     }
-    //---------------------------------------------------------------------------------------------//
+    //VVVVVV-------------------------------Controller_home.java--------------------------------------//
     public void deleteItem(Item item) {
         String deleteQuery = "DELETE FROM " + Const.PRODUCT_TABLE + " WHERE " + Const.PRODUCT_NUMBER + " = ?";
 
@@ -394,29 +389,7 @@ public class DatabaseHandler extends Configs {
             e.printStackTrace();
         }
     }
-    //---------------------------------------------------------------------------------------------//
-    public String getUserRole(String username) throws SQLException, ClassNotFoundException {
-        String role = null;
-        Connection connection = getDbConnection();
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT " + Const.USER_ROLE + " FROM " + Const.USER_TABLE + " WHERE " + Const.USER_USERNAME + " = ?"
-            );
-            preparedStatement.setString(1, username);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                role = resultSet.getString(Const.USER_ROLE);
-                System.out.println("Role from database: " + role);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return role;
-    }
-    //---------------------------------------------------------------------------------------------//
+    //VVVVVV------------------------------Controller_control.java----------------------------------//
     public ObservableList<User> getAllUsers() {
         ObservableList<User> userList = FXCollections.observableArrayList();
         String query = "SELECT * FROM " + Const.USER_TABLE;
@@ -443,7 +416,7 @@ public class DatabaseHandler extends Configs {
 
         return userList;
     }
-
+    //VVVVVV-------------------------------Controller_control.java--------------------------------------//
     public void deleteUser(String username) {
         String query = "DELETE FROM " + Const.USER_TABLE + " WHERE " + Const.USER_USERNAME + " = ?";
 
@@ -455,6 +428,7 @@ public class DatabaseHandler extends Configs {
             e.printStackTrace();
         }
     }
+    //VVVVVV---------------------------------Controller_control.java------------------------------------//
     public void updateUserRole(String username, String newRole) {
         String updateQuery = "UPDATE " + Const.USER_TABLE + " SET " +
                 Const.USER_ROLE + " = ? WHERE " +
@@ -470,6 +444,7 @@ public class DatabaseHandler extends Configs {
             e.printStackTrace();
         }
     }
+    //VVVVVV-------------------------------Controller_control.java----------------------------------------//
     public ObservableList<User> searchUserByFirstName(String firstName) {
         ObservableList<User> userList = FXCollections.observableArrayList();
         String select = "SELECT * FROM " + Const.USER_TABLE + " WHERE " + Const.USER_FIRSTNAME + " LIKE ?";
@@ -497,7 +472,7 @@ public class DatabaseHandler extends Configs {
         }
         return userList;
     }
-
+    //VVVVVV---------------------------------Controller_control.java---------------------------------------//
     public ObservableList<User> searchUserByUsername(String username) {
         ObservableList<User> userList = FXCollections.observableArrayList();
         String select = "SELECT * FROM " + Const.USER_TABLE + " WHERE " + Const.USER_USERNAME + " LIKE ?";
@@ -525,7 +500,52 @@ public class DatabaseHandler extends Configs {
         }
         return userList;
     }
+    //VVVVVV------------Controller_control.java-------------------Controller_registration.java-------------------//
+    public boolean userExists(String username) {
+        String query = "SELECT COUNT(*) FROM " + Const.USER_TABLE + " WHERE " + Const.USER_USERNAME + " = ?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(query);
+            prSt.setString(1, username);
+            ResultSet rs = prSt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    //VVVVVV---------------------------------Controller_control.java------------------------------------//
+    public String getUserRoleByUsername(String username) {
+        String role = "";
+        String query = "SELECT " + Const.USER_ROLE + " FROM " + Const.USER_TABLE + " WHERE " + Const.USER_USERNAME + " = ?";
+
+        try (Connection connection = getDbConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, username);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    role = resultSet.getString(Const.USER_ROLE);
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return role;
+    }
+    //VVVVVV--------------------------------Controller_registration.java---------------------------------------//
+    public boolean isFirstUser() {
+        String query = "SELECT COUNT(*) FROM " + Const.USER_TABLE;
+        try (PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getInt(1) == 0;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
-
-
-

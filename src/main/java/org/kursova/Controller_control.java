@@ -36,13 +36,30 @@ public class Controller_control {
     @FXML
     private Button refreshTableBtn;
     @FXML
+    private Button addUserField;
+    @FXML
+    private ChoiceBox<String> choiceAddField;
+    @FXML
     private TextField searchUserField;
+    @FXML
+    private TextField firstNameAddField;
+    @FXML
+    private TextField lastNameAddField;
+    @FXML
+    private TextField passwordAddField;
+    @FXML
+    private TextField userNameAddField;
+    @FXML
+    private TextField phoneNumberAddField;
+    @FXML
+    private TextField emailAddField;
     @FXML
     private RadioButton firstNameRadioBtn;
     @FXML
     private RadioButton loginRadioBtn;
 
     private DatabaseHandler dbHandler;
+    private ObservableList<String> options = FXCollections.observableArrayList("User", "Admin");
 
     @FXML
     private void initialize() {
@@ -56,15 +73,31 @@ public class Controller_control {
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
 
+        String currentUserRole = getCurrentUserRole();
+        if (!"Super Admin".equals(currentUserRole)) {
+            deleteUser.setDisable(true);
+        }
+
         exitBtn.setOnAction(actionEvent -> showExitConfirmation());
         deleteUser.setOnAction(actionEvent -> handleDeleteUser());
         takeRoleBtn.setOnAction(actionEvent -> handleTakeRole());
         searchBtn.setOnAction(actionEvent -> handleSearchUser());
-        refreshTableBtn.setOnAction(actionEvent ->updateTable());
+        refreshTableBtn.setOnAction(actionEvent -> updateTable());
+        addUserField.setOnAction(actionEvent -> handleAddUser());
+
+        choiceAddField.setItems(options);
+        choiceAddField.setValue("Оберіть опцію");
 
         updateTable();
     }
 
+    private String getCurrentUserRole() {
+        String currentUsername = Controller_authorization.getCurrentUserLogin();
+        if (currentUsername == null || currentUsername.isEmpty()) {
+            return "";
+        }
+        return dbHandler.getUserRoleByUsername(currentUsername);
+    }
     public void updateTable() {
         ObservableList<User> userList = dbHandler.getAllUsers();
         userTable.setItems(userList);
@@ -173,4 +206,39 @@ public class Controller_control {
         userTable.setItems(userList);
     }
 
+    private void handleAddUser() {
+        String firstName = firstNameAddField.getText();
+        String lastName = lastNameAddField.getText();
+        String password = passwordAddField.getText();
+        String userName = userNameAddField.getText();
+        String phoneNumber = phoneNumberAddField.getText();
+        String email = emailAddField.getText();
+        String role = choiceAddField.getValue();
+
+        if (firstName.isEmpty() || lastName.isEmpty() || password.isEmpty() || userName.isEmpty() || phoneNumber.isEmpty() || email.isEmpty() || role.equals("Оберіть опцію")) {
+            showWarning("Увага", "Будь ласка, заповніть всі поля та оберіть позицію користувача.");
+            return;
+        }
+
+        if (dbHandler.userExists(userName)) {
+            showWarning("Увага", "Користувач з таким логіном вже існує.");
+            return;
+        }
+
+        User newUser = new User(firstName, lastName, password, userName, phoneNumber, email, role);
+        dbHandler.signUpUser(newUser);
+        updateTable();
+
+        clearAddUserFields();
+    }
+
+    private void clearAddUserFields() {
+        firstNameAddField.clear();
+        lastNameAddField.clear();
+        passwordAddField.clear();
+        userNameAddField.clear();
+        phoneNumberAddField.clear();
+        emailAddField.clear();
+        choiceAddField.setValue("Оберіть опцію");
+    }
 }

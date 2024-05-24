@@ -12,7 +12,7 @@ public class BasicApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(BasicApplication.class.getResource("authorization-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 440, 255);
-        stage.setTitle("Authorization");
+        stage.setTitle("Авторизція");
         stage.setScene(scene);
         stage.show();
     }

@@ -9,10 +9,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.application.Platform;
 import javafx.geometry.NodeOrientation;
 import java.io.IOException;
+import java.util.Optional;
 
 public class Controller_home {
     @FXML
@@ -33,6 +35,8 @@ public class Controller_home {
     private Button deleteBtn;
     @FXML
     private Button controlBtn;
+    @FXML
+    private TableColumn<Item, String> productNumColumn;
     @FXML
     private TableColumn<Item, String> productNameColumn;
     @FXML
@@ -70,6 +74,7 @@ public class Controller_home {
     private void initialize() {
         dbHandler = new DatabaseHandler();
 
+        productNumColumn.setCellValueFactory(new PropertyValueFactory<>("productNum"));
         productNameColumn.setCellValueFactory(new PropertyValueFactory<>("productName"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -113,7 +118,6 @@ public class Controller_home {
         authController = new Controller_authorization();
     }
 
-
     public void updateTable() {
         DatabaseHandler dbHandler = new DatabaseHandler();
         ObservableList<Item> productList;
@@ -146,22 +150,26 @@ public class Controller_home {
     private void showExitConfirmation() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Підтвердження виходу");
-        alert.setHeaderText("Ви впевнені, що хочете вийти?");
-        alert.setContentText("Натисніть OK для виходу або Cancel для скасування.");
+        alert.setHeaderText(null);
+        alert.setContentText("Ви хочете вийти з програми або з аккаунта?");
 
-        ButtonType okButton = new ButtonType("OK");
-        ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType exitAppButton = new ButtonType("Вийти з програми");
+        ButtonType exitAccountButton = new ButtonType("Вийти з аккаунта");
+        ButtonType cancelButton = new ButtonType("Скасувати", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-        alert.getButtonTypes().setAll(okButton, cancelButton);
+        alert.getButtonTypes().setAll(exitAppButton, exitAccountButton, cancelButton);
 
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
 
-        alert.showAndWait().ifPresent(type -> {
-            if (type == okButton) {
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent()) {
+            if (result.get() == exitAppButton) {
                 Platform.exit();
+            } else if (result.get() == exitAccountButton) {
+                loadLoginScene();
             }
-        });
+        }
     }
 
     @FXML
@@ -267,6 +275,8 @@ public class Controller_home {
     public void setDeleteButtonVisibility(String role) {
         if ("Admin".equals(role)) {
             deleteBtn.setVisible(true);
+        } else if ("Super Admin".equals(role)) {
+            deleteBtn.setVisible(true);
         } else {
             deleteBtn.setVisible(false);
         }
@@ -275,9 +285,30 @@ public class Controller_home {
     public void setControlButtonVisibility(String role) {
         if ("Admin".equals(role)) {
             controlBtn.setVisible(true);
+        } else if ("Super Admin".equals(role)) {
+            controlBtn.setVisible(true);
         } else {
             controlBtn.setVisible(false);
         }
     }
+    private void loadLoginScene() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/kursova/authorization-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) exitBtn.getScene().getWindow();
+            stage.setScene(new Scene(root));
+
+            double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+            double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+
+            stage.setX((screenWidth - stage.getWidth()) / 2);
+            stage.setY((screenHeight - stage.getHeight()) / 2);
+
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 

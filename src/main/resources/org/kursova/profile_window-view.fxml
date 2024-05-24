@@ -6,9 +6,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="398.0" prefWidth="743.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kursova.Controller_profile">
+<AnchorPane prefHeight="340.0" prefWidth="936.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kursova.Controller_profile">
    <children>
-      <AnchorPane prefHeight="47.0" prefWidth="743.0" style="-fx-background-color: #00A550;">
+      <AnchorPane layoutX="192.0" prefHeight="47.0" prefWidth="744.0" style="-fx-background-color: #00A550;">
          <children>
             <Text fill="WHITE" layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Профіль користувача" wrappingWidth="204.205078125">
                <font>
@@ -17,44 +17,58 @@
             </Text>
          </children>
       </AnchorPane>
-      <TextField fx:id="firstNameField" layoutX="14.0" layoutY="79.0" prefHeight="25.0" prefWidth="331.0" />
-      <TextField fx:id="lastNameField" layoutX="14.0" layoutY="126.0" prefHeight="25.0" prefWidth="331.0" />
-      <TextField fx:id="passwordField" layoutX="14.0" layoutY="174.0" prefHeight="25.0" prefWidth="331.0" />
-      <TextField fx:id="loginField" layoutX="398.0" layoutY="79.0" prefHeight="25.0" prefWidth="331.0" />
-      <TextField fx:id="phoneNumberField" layoutX="398.0" layoutY="126.0" prefHeight="25.0" prefWidth="331.0" />
-      <TextField fx:id="emailField" layoutX="398.0" layoutY="174.0" prefHeight="25.0" prefWidth="331.0" />
-      <Text layoutX="399.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Електронна пошта">
+      <TextField fx:id="firstNameField" layoutX="198.0" layoutY="79.0" prefHeight="25.0" prefWidth="331.0" />
+      <TextField fx:id="lastNameField" layoutX="198.0" layoutY="126.0" prefHeight="25.0" prefWidth="331.0" />
+      <TextField fx:id="passwordField" layoutX="198.0" layoutY="174.0" prefHeight="25.0" prefWidth="331.0" />
+      <TextField fx:id="loginField" layoutX="582.0" layoutY="79.0" prefHeight="25.0" prefWidth="331.0" />
+      <TextField fx:id="phoneNumberField" layoutX="582.0" layoutY="126.0" prefHeight="25.0" prefWidth="331.0" />
+      <TextField fx:id="emailField" layoutX="582.0" layoutY="174.0" prefHeight="25.0" prefWidth="331.0" />
+      <Text layoutX="583.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Електронна пошта">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Text layoutX="14.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ім`я">
+      <Text layoutX="198.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ім`я">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Text layoutX="398.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Номер мобільного">
+      <Text layoutX="582.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Номер мобільного">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Text layoutX="14.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пароль">
+      <Text layoutX="198.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пароль">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Text layoutX="14.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Прізвище">
+      <Text layoutX="198.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Прізвище">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Text layoutX="398.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ім`я користувача (логін)">
+      <Text layoutX="582.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ім`я користувача (логін)">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Button fx:id="okayBtn" layoutX="647.0" layoutY="359.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Ок" />
-      <Button fx:id="editBtnConfirm" layoutX="544.0" layoutY="359.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Редагувати" />
-      <Button fx:id="saveBtn" layoutX="445.0" layoutY="359.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Зберегти" />
+      <Button fx:id="okayBtn" layoutX="845.0" layoutY="305.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Ок" />
+      <AnchorPane layoutY="-6.0" prefHeight="351.0" prefWidth="192.0" style="-fx-background-color: #00A550;">
+         <children>
+            <Text fill="WHITE" layoutX="24.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ласкаво просимо">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="roleText" fill="WHITE" layoutX="59.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Користувач">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <Button fx:id="editBtnConfirm" layoutX="55.0" layoutY="260.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Редагувати" />
+            <Button fx:id="saveBtn" layoutX="55.0" layoutY="302.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Зберегти" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

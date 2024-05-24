@@ -4,10 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.kursova.animations.Shake;
 
@@ -16,16 +13,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Controller_authorization {
-
     @FXML
     private TextField userNameField;
-
     @FXML
     private PasswordField passwordField;
-
     @FXML
     private Button RegistrationButton;
-
     @FXML
     private Button ConfirmButton;
 
@@ -34,7 +27,6 @@ public class Controller_authorization {
 
     @FXML
     public void initialize() {
-
         ConfirmButton.setOnAction(event -> {
             String loginUsername = userNameField.getText().trim();
             String loginPassword = passwordField.getText().trim();
@@ -122,7 +114,7 @@ public class Controller_authorization {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Роль користувача");
         alert.setHeaderText(null);
-        alert.setContentText("Ваша роль: " + role);
+        alert.setContentText("Ви маєта права: " + role);
         alert.showAndWait();
     }
 
