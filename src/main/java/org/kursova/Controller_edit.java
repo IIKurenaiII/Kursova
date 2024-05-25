@@ -25,6 +25,10 @@ public class Controller_edit {
     private Button confirmBtn;
     @FXML
     private Button cancelBtn;
+    @FXML
+    private Button addBtn;
+    @FXML
+    private Button minusBtn;
 
     private Item selectedItem;
     private Stage stage;
@@ -43,6 +47,8 @@ public class Controller_edit {
         radioBtnMiss.setToggleGroup(statusToggleGroup);
 
         cancelBtn.setOnAction(this::handleCancelButtonAction);
+        addBtn.setOnAction(event -> handleAddButtonAction());
+        minusBtn.setOnAction(event -> handleMinusButtonAction());
     }
 
     @FXML
@@ -142,6 +148,18 @@ public class Controller_edit {
             } else {
                 radioBtnMiss.setSelected(true);
             }
+        }
+    }
+
+    private void handleAddButtonAction() {
+        int currentQuantity = Integer.parseInt(editQuantityField.getText());
+        editQuantityField.setText(String.valueOf(currentQuantity + 1));
+    }
+
+    private void handleMinusButtonAction() {
+        int currentQuantity = Integer.parseInt(editQuantityField.getText());
+        if (currentQuantity > 0) {
+            editQuantityField.setText(String.valueOf(currentQuantity - 1));
         }
     }
 }

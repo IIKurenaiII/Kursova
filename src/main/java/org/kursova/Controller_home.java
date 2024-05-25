@@ -13,6 +13,8 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.application.Platform;
 import javafx.geometry.NodeOrientation;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -100,7 +102,7 @@ public class Controller_home {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Попередження");
                 alert.setHeaderText(null);
-                alert.setContentText("Будь ласка, оберіть елемент для редагування.");
+                alert.setContentText("Будь ласка, оберіть елемент для редагування або, два рази клацніть на нього мишою.");
                 alert.showAndWait();
             }
         });
@@ -116,6 +118,17 @@ public class Controller_home {
         updateTable();
 
         authController = new Controller_authorization();
+
+        itemTableView.setOnMouseClicked(this::handleRowDoubleClick);
+    }
+
+    private void handleRowDoubleClick(MouseEvent event) {
+        if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+            Item selectedItem = itemTableView.getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+                openEditWindow(selectedItem);
+            }
+        }
     }
 
     public void updateTable() {
@@ -311,4 +324,3 @@ public class Controller_home {
     }
 
 }
-
