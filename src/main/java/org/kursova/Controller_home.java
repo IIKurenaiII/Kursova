@@ -164,7 +164,7 @@ public class Controller_home {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Підтвердження виходу");
         alert.setHeaderText(null);
-        alert.setContentText("Ви хочете вийти з програми або з аккаунта?");
+        alert.setContentText("Ви хочете вийти з програми або, з аккаунта?");
 
         ButtonType exitAppButton = new ButtonType("Вийти з програми");
         ButtonType exitAccountButton = new ButtonType("Вийти з аккаунта");
@@ -236,6 +236,7 @@ public class Controller_home {
 
             Controller_edit editController = loader.getController();
             editController.initData(selectedItem);
+            editController.setMainController(this);
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
@@ -304,6 +305,7 @@ public class Controller_home {
             controlBtn.setVisible(false);
         }
     }
+
     private void loadLoginScene() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/kursova/authorization-view.fxml"));
@@ -322,5 +324,4 @@ public class Controller_home {
             e.printStackTrace();
         }
     }
-
 }

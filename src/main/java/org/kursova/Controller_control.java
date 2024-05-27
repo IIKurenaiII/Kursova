@@ -98,6 +98,7 @@ public class Controller_control {
         }
         return dbHandler.getUserRoleByUsername(currentUsername);
     }
+
     public void updateTable() {
         ObservableList<User> userList = dbHandler.getAllUsers();
         userTable.setItems(userList);
@@ -125,8 +126,8 @@ public class Controller_control {
     private void handleDeleteUser() {
         User selectedUser = userTable.getSelectionModel().getSelectedItem();
         if (selectedUser != null) {
-            if (selectedUser.getRole().equalsIgnoreCase("admin")) {
-                showWarning("Неможливо видалити", "Адмінів не можна видаляти.");
+            if (selectedUser.getRole().equalsIgnoreCase("admin") || selectedUser.getRole().equalsIgnoreCase("super admin")) {
+                showWarning("Неможливо видалити", "Адмінів та супер адмінів не можна видаляти.");
             } else {
                 Alert alert = new Alert(AlertType.CONFIRMATION);
                 alert.setTitle("Підтвердження видалення");
@@ -220,6 +221,11 @@ public class Controller_control {
             return;
         }
 
+        if (!isNameValid(firstName) || !isNameValid(lastName) || !isPasswordValid(password) || !isPhoneNumberValid(phoneNumber) || !isEmailValid(email)) {
+            showWarning("Увага", "Перевірте правильність введених даних.");
+            return;
+        }
+
         if (dbHandler.userExists(userName)) {
             showWarning("Увага", "Користувач з таким логіном вже існує.");
             return;
@@ -240,5 +246,21 @@ public class Controller_control {
         phoneNumberAddField.clear();
         emailAddField.clear();
         choiceAddField.setValue("Оберіть опцію");
+    }
+
+    private boolean isNameValid(String name) {
+        return !name.matches(".*\\d.*");
+    }
+
+    private boolean isEmailValid(String email) {
+        return email.contains("@");
+    }
+
+    private boolean isPasswordValid(String password) {
+        return password.length() >= 8;
+    }
+
+    private boolean isPhoneNumberValid(String phoneNumber) {
+        return phoneNumber.length() >= 10;
     }
 }

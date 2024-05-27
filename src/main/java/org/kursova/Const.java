@@ -11,7 +11,7 @@ public class Const {
     public static final  String USER_EMAIL = "email";
     public static final  String USER_ROLE = "role";
 
-    //констанити предмету
+    //констанити предмете
     public static final String PRODUCT_TABLE = "products";
     public static final String PRODUCT_ID = "productid";
     public static final String PRODUCT_NUMBER = "productnum";

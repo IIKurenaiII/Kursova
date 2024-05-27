@@ -194,9 +194,6 @@ public class Controller_registration {
         return true;
     }
 
-
-
-
     private void showWarning(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);

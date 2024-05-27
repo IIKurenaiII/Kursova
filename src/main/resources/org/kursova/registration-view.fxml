@@ -14,7 +14,7 @@
         <children>
             <Text fill="WHITE" layoutX="248.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Реєстрація">
                 <font>
-                    <Font size="24.0" />
+                    <Font name="Georgia" size="24.0" />
                 </font>
             </Text>
         </children>
@@ -25,12 +25,12 @@
                 <buttons>
                     <Button fx:id="CancelButton" style="-fx-background-color: #FF5733; -fx-text-fill: white;" text="Відмінити">
                         <font>
-                            <Font size="12.0" />
+                            <Font name="Georgia" size="12.0" />
                         </font>
                     </Button>
                     <Button fx:id="RegistrationButton" prefHeight="25.0" prefWidth="127.0" style="-fx-background-color: #00A550; -fx-text-fill: white;" text="Зареєструватися">
                         <font>
-                            <Font size="12.0" />
+                            <Font name="Georgia" size="12.0" />
                         </font>
                     </Button>
                 </buttons>
@@ -48,10 +48,10 @@
             <Text fx:id="lastNameText" layoutX="334.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введіть своє прізвище" />
             <Text fx:id="userNameText" layoutX="334.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введіть ім`я користувача" />
             <Text fx:id="passwordWarningText" layoutX="334.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: red;" text="Пароль закороткий,він має містити мін. 8 символів." visible="false" />
-            <Text fx:id="firstnameWarningText" layoutX="14.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ім'я не може містити цифр чи символів." style="-fx-fill: red;" visible="false"/>
-            <Text fx:id="lastnameWarningText" layoutX="334.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Прізвище не може містити цифр чи символів." style="-fx-fill: red;" visible="false"/>
-            <Text fx:id="emailWarningText" layoutX="14.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Електронна адреса повинна містити символ '@'." style="-fx-fill: red;" visible="false"/>
-            <Text fx:id="phoneNumberWarningText" layoutX="14.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Телефон закороткий,він має містити мін. 10 цифр." style="-fx-fill: red;" visible="false"/>
+            <Text fx:id="firstnameWarningText" layoutX="14.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: red;" text="Ім'я не може містити цифр чи символів." visible="false" />
+            <Text fx:id="lastnameWarningText" layoutX="334.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: red;" text="Прізвище не може містити цифр чи символів." visible="false" />
+            <Text fx:id="emailWarningText" layoutX="14.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: red;" text="Електронна адреса повинна містити символ '@'." visible="false" />
+            <Text fx:id="phoneNumberWarningText" layoutX="14.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: red;" text="Телефон закороткий,він має містити мін. 10 цифр." visible="false" />
         </children>
     </AnchorPane>
 </VBox>

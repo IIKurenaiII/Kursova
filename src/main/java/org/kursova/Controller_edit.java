@@ -5,6 +5,9 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Controller_edit {
 
     @FXML
@@ -22,8 +25,6 @@ public class Controller_edit {
     @FXML
     private RadioButton radioBtnMiss;
     @FXML
-    private Button confirmBtn;
-    @FXML
     private Button cancelBtn;
     @FXML
     private Button addBtn;
@@ -32,6 +33,7 @@ public class Controller_edit {
 
     private Item selectedItem;
     private Stage stage;
+    private Controller_home mainController;
 
     private String initialName;
     private String initialType;
@@ -55,6 +57,9 @@ public class Controller_edit {
     private void handleSaveButtonAction(ActionEvent event) {
         saveChanges();
         closeWindow();
+        if (mainController != null) {
+            mainController.updateTable();
+        }
     }
 
     @FXML
@@ -75,6 +80,9 @@ public class Controller_edit {
                 if (type == saveButton) {
                     saveChanges();
                     closeWindow();
+                    if (mainController != null) {
+                        mainController.updateTable();
+                    }
                 } else if (type == dontSaveButton) {
                     closeWindow();
                 }
@@ -88,6 +96,10 @@ public class Controller_edit {
         this.stage = stage;
     }
 
+    public void setMainController(Controller_home mainController) {
+        this.mainController = mainController;
+    }
+
     private void saveChanges() {
         String editedName = editNameField.getText();
         String editedType = editTypeField.getText();
@@ -96,6 +108,8 @@ public class Controller_edit {
         String editedAuthor = editAuthorField.getText();
         String editedStatus = radioBtnEnabled.isSelected() ? "Наявне" : "Відсутнє";
 
+        String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")); //dd-MM-yyyy
+
         if (selectedItem != null) {
             selectedItem.setProductName(editedName);
             selectedItem.setType(editedType);
@@ -103,6 +117,7 @@ public class Controller_edit {
             selectedItem.setPrice(editedPrice);
             selectedItem.setAuthor(editedAuthor);
             selectedItem.setStatus(editedStatus);
+            selectedItem.setDate(currentDate);
 
             DatabaseHandler dbHandler = new DatabaseHandler();
             dbHandler.updateProduct(selectedItem);

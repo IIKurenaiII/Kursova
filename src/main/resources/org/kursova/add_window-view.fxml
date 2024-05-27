@@ -9,10 +9,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kursova.Controller_add">
-    <AnchorPane prefHeight="400.0" prefWidth="635.0" style="-fx-background-color: white;">
+<AnchorPane prefHeight="342.0" prefWidth="635.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kursova.Controller_add">
+    <AnchorPane prefHeight="359.0" prefWidth="635.0" style="-fx-background-color: #e9e9e9;">
         <children>
-            <Text layoutX="14.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Предмет">
+            <Text layoutX="14.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Назва">
                 <font>
                     <Font size="18.0" />
                 </font>
@@ -47,7 +47,7 @@
             <RadioButton fx:id="availableRadioButton" layoutX="445.0" layoutY="227.0" mnemonicParsing="false" text="Наявний" />
          <AnchorPane prefHeight="43.0" prefWidth="635.0" style="-fx-background-color: #00A550;">
             <children>
-               <Text fill="WHITE" layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Додати предмет" wrappingWidth="185.13671875">
+               <Text fill="WHITE" layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Додати товар/предмет" wrappingWidth="244.13671875">
                   <font>
                      <Font size="22.0" />
                   </font>

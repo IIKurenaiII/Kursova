@@ -5,6 +5,8 @@ import javafx.collections.ObservableList;
 
 import java.sql.*;
 
+import static java.sql.DriverManager.getConnection;
+
 public class DatabaseHandler extends Configs {
     Connection dbConnection;
 
@@ -13,7 +15,7 @@ public class DatabaseHandler extends Configs {
 
         Class.forName("com.mysql.cj.jdbc.Driver");
 
-        dbConnection = DriverManager.getConnection(connectionString, dbUser , dbPass);
+        dbConnection = getConnection(connectionString, dbUser , dbPass);
 
         return dbConnection;
     }
@@ -333,23 +335,25 @@ public class DatabaseHandler extends Configs {
     }
     //VVVVVV------------------------------Controller_edit.java----------------------------------------//
     public void updateProduct(Item item) {
-        String updateQuery = "UPDATE " + Const.PRODUCT_TABLE + " SET " + Const.PRODUCT_NAME + " = ?, " +
-                Const.PRODUCT_TYPE + " = ?, " + Const.PRODUCT_QUANTITY + " = ?, " + Const.PRODUCT_PRICE + " = ?, " +
-                Const.PRODUCT_AUTHOR + " = ?, " + Const.PRODUCT_STATUS + " = ? WHERE " + Const.PRODUCT_NUMBER + " = ?";
+        String updateQuery = "UPDATE products SET productName = ?, type = ?, quantity = ?, price = ?, author = ?, status = ?, date = ? WHERE productNum = ?";
 
         try (Connection connection = getDbConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+
             preparedStatement.setString(1, item.getProductName());
             preparedStatement.setString(2, item.getType());
             preparedStatement.setString(3, item.getQuantity());
             preparedStatement.setString(4, item.getPrice());
             preparedStatement.setString(5, item.getAuthor());
             preparedStatement.setString(6, item.getStatus());
-            preparedStatement.setString(7, item.getProductNum());
+            preparedStatement.setString(7, item.getDate());
+            preparedStatement.setInt(8, Integer.parseInt(item.getProductNum()));
 
             preparedStatement.executeUpdate();
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
     //VVVVVV-------------------------------Controller_profile.java---------------------------------------------//
@@ -547,5 +551,27 @@ public class DatabaseHandler extends Configs {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public void updateUser(User user, String oldUsername) {
+        String query = "UPDATE users SET firstname = ?, lastname = ?, password = ?, username = ?, phonenumber = ?, email = ? WHERE username = ?";
+
+        try (Connection connection = getDbConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, user.getFirstname());
+            preparedStatement.setString(2, user.getLastname());
+            preparedStatement.setString(3, user.getPassword());
+            preparedStatement.setString(4, user.getUsername());
+            preparedStatement.setString(5, user.getPhonenumber());
+            preparedStatement.setString(6, user.getEmail());
+            preparedStatement.setString(7, oldUsername);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

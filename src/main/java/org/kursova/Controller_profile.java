@@ -153,21 +153,42 @@ public class Controller_profile {
 
     private void handleSaveBtnAction() {
         if (isEdited) {
-            DatabaseHandler dbHandler = new DatabaseHandler();
-            User user = new User();
-            user.setUsername(Controller_authorization.getCurrentUserLogin());
-            user.setPassword(passwordField.getText());
-            user.setFirstname(firstNameField.getText());
-            user.setLastname(lastNameField.getText());
-            user.setPhonenumber(phoneNumberField.getText());
-            user.setEmail(emailField.getText());
+            if (areFieldsValid()) {
+                DatabaseHandler dbHandler = new DatabaseHandler();
+                User user = new User();
+                String newUsername = loginField.getText();
+                String currentUsername = Controller_authorization.getCurrentUserLogin();
 
-            dbHandler.updateUser(user);
+                if (!newUsername.equals(currentUsername) && dbHandler.userExists(newUsername)) {
+                    showAlert("Помилка", "Користувач з таким логіном вже існує.");
+                    return;
+                }
 
-            showAlert("Успіх", "Ваші дані було успішно збережено.");
-            saveBtn.setDisable(true);
-            isEdited = false;
+                user.setUsername(newUsername);
+                user.setPassword(passwordField.getText());
+                user.setFirstname(firstNameField.getText());
+                user.setLastname(lastNameField.getText());
+                user.setPhonenumber(phoneNumberField.getText());
+                user.setEmail(emailField.getText());
+
+                dbHandler.updateUser(user, currentUsername);
+
+                Controller_authorization.setCurrentUserLogin(newUsername);
+
+                showAlert("Успіх", "Ваші дані було успішно збережено.");
+                saveBtn.setDisable(true);
+                isEdited = false;
+            }
         }
+    }
+
+
+    private boolean areFieldsValid() {
+        if (firstNameField.getText().isEmpty() || lastNameField.getText().isEmpty() || passwordField.getText().isEmpty() || phoneNumberField.getText().isEmpty() || emailField.getText().isEmpty()) {
+            showAlert("Помилка", "Будь ласка, заповніть всі поля.");
+            return false;
+        }
+        return true;
     }
 
     private void updateSaveBtnState() {

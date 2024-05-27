@@ -127,7 +127,15 @@ public class Controller_authorization {
         return currentUserLogin;
     }
 
+    public static void setCurrentUserLogin(String login) {
+        currentUserLogin = login;
+    }
+
     public static String getCurrentUserPassword() {
         return currentUserPassword;
+    }
+
+    public static void setCurrentUserPassword(String password) {
+        currentUserPassword = password;
     }
 }
